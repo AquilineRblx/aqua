@@ -1,0 +1,9 @@
+{
+  "name": "Packacges",
+  "tree": {
+    "$path": "src/Packages",
+    "aqua": {
+      "$path": "src"
+    }
+  }
+}

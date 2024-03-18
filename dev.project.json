@@ -1,0 +1,12 @@
+{
+    "name": "aqua-dev",
+    "tree": {
+        "$className": "DataModel",
+        "ReplicatedStorage": {
+            "$className": "ReplicatedStorage",
+            "aqua": {
+                "$path": "src"
+            }
+        }
+    }
+}
