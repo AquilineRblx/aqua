@@ -25,15 +25,6 @@ jobs:
       - name: Create Packages Directory
         run: mkdir -p Packages
 
-      - name: Build aqua.rbxm
-        run: rojo build -o aqua.rbxm publish.project.json
-
-      - name: Upload aqua.rbxm as build artifact
-        uses: actions/upload-artifact@v3
-        with: 
-          name: aqua
-          path: aqua.rbxm
-
       - name: Get Release from wally.toml
         uses: SebRollen/toml-action@v1.0.0
         id: read_toml
@@ -49,12 +40,3 @@ jobs:
           mkdir =p ~/.wally
           printf "[tokens]\n\"https://api.wally.run/\" = \"%s\"" "$WALLY_TOKEN" >> ~/.wally/auth.toml
           wally publish
-
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        with: 
-          name: ${{ steps.read_toml.outputs.value }}
-          tag_name: ${{ steps.read_toml.outputs.value }}
-          files: aqua.rbxm
-          generate_release_notes: true
-          draft: true
