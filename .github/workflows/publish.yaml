@@ -20,7 +20,7 @@ jobs:
         run: aftman install
 
       - name: Install Dependencies
-        run: wally install
+        run: wally install --project-path src/
 
       - name: Create Packages Directory
         run: mkdir -p Packages
