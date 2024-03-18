@@ -1,0 +1,60 @@
+name: Publish
+
+on: push
+
+jobs: 
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout master
+        uses: actions/checkout@v3
+
+      - name: Setup aftman
+        uses: ok-nick/setup-aftman@v0.4.2
+        with: 
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install aftman Toolchains
+        run: foreman install
+
+      - name: Install Dependencies
+        run: wally install
+
+      - name: Create Packages Directory
+        run: mkdir -p Packages
+
+      - name: Build aqua.rbxm
+        run: rojo build -o aqua.rbxm publish.project.json
+
+      - name: Upload aqua.rbxm as build artifact
+        uses: actions/upload-artifact@v3
+        with: 
+          name: aqua
+          path: aqua.rbxm
+
+      - name: Get Release from wally.toml
+        uses: SebRollen/toml-action@v1.0.0
+        id: read_toml
+        with: 
+          file: 'src/wally.toml'
+          field: 'package.version'
+
+
+      - name: Publish to Wally
+        env: 
+          WALLY_TOKEN: ${{ secrets.WALLY_AUTH_TOKEN }}
+        run: |
+          mkdir =p ~/.wally
+          printf "[tokens]\n\"https://api.wally.run/\" = \"%s\"" "$WALLY_TOKEN" >> ~/.wally/auth.toml
+          wally publish
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with: 
+          name: ${{ steps.read_toml.outputs.value }}
+          tag_name: ${{ steps.read_toml.outputs.value }}
+          files: aqua.rbxm
+          generate_release_notes: true
+          draft: true
