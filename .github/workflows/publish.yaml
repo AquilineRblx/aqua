@@ -17,7 +17,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install aftman Toolchains
-        run: foreman install
+        run: aftman install
 
       - name: Install Dependencies
         run: wally install
