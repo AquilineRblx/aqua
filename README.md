@@ -20,7 +20,7 @@ on your system if you wish to develop with Aqua:
 Once you install and configure the above, add the following to your `wally.toml`:
 ```toml
 [dependencies]
-Aqua = "aquiline-rblx/aqua@0.1.0"
+Aqua = "vortexreanimated/aqua@0.1.0"
 ```
 
 You will then be able to use all the libraries Aqua provides. Happy scripting!
